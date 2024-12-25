@@ -1,0 +1,59 @@
+@import '../../styles/variables';
+
+.material-explorer {
+  padding: $spacing-lg;
+  max-width: 80rem;
+  margin: 0 auto;
+
+  &__card {
+    background-color: $card-background;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+    padding: $spacing-lg;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__controls {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+
+    @media (min-width: $breakpoint-md) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  &__select-group {
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: $spacing-xs;
+    }
+
+    select {
+      width: 100%;
+      padding: $spacing-xs $spacing-sm;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+      background-color: $card-background;
+      color: $text-primary;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+  }
+
+  &__chart {
+    height: 24rem;
+    width: 100%;
+  }
+}
