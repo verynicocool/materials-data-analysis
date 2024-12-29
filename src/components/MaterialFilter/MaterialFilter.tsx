@@ -6,8 +6,8 @@ import './MaterialFilter.scss';
 interface FilterCondition {
   property: string;
   operator: 'gt' | 'lt' | 'eq' | 'between';
-  value1: string;  // Changed to string to store raw input
-  value2?: string; // Changed to string to store raw input
+  value1: string; 
+  value2?: string;
   category: 'inputs' | 'outputs';
 }
 
