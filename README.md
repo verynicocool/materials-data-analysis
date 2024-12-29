@@ -46,18 +46,6 @@ yarn dev
 
 4. Open your browser and navigate to `http://localhost:5173` (or the URL shown in your terminal)
 
-### Building for Production
-
-To create a production build:
-
-```bash
-npm run build
-# or
-yarn build
-```
-
-The built files will be in the `dist` directory.
-
 ## Technology Stack
 
 - React 18
