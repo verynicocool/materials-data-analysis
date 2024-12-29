@@ -1,0 +1,177 @@
+@import '../../styles/variables';
+
+.material-filter {
+  padding: $spacing-sm;
+  max-width: 80rem;
+  margin: 0 auto;
+
+  &__card {
+    background-color: $card-background;
+    border-radius: $border-radius;
+    box-shadow: $shadow;
+    padding: $spacing-lg;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__filters {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__filter-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $spacing-md;
+    align-items: start;
+    padding: $spacing-md;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    background-color: $background-color;
+    position: relative;
+    
+    &.has-between {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  &__remove-button {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid $border-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    color: $text-secondary;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      background-color: #fee2e2;
+      border-color: #ef4444;
+      color: #dc2626;
+    }
+  }
+
+  &__form-group {
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: $spacing-xs;
+    }
+
+    select {
+      width: 100%;
+      padding: $spacing-xs $spacing-sm;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+      background-color: $card-background;
+      color: $text-primary;
+
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+
+    input[type="number"] {
+        width: 100%;
+        padding: $spacing-xs $spacing-sm;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        background-color: $card-background;
+        color: $text-primary;
+        box-sizing: border-box; // Ensure padding is included in width
+    }
+  }
+
+  &__button {
+    padding: $spacing-xs $spacing-md;
+    border-radius: $border-radius;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+
+    &--primary {
+      background-color: $primary-color;
+      color: white;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+
+    &--danger {
+      color: #dc2626;
+      
+      &:hover {
+        color: darken(#dc2626, 10%);
+      }
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-md;
+    margin-bottom: $spacing-sm;
+  }
+
+  &__results {
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    overflow: hidden;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: $spacing-sm;
+      border: 1px solid $border-color;
+      text-align: left;
+    }
+
+    th {
+      background-color: $background-color;
+      font-weight: 500;
+    }
+  }
+
+  &__property-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-md;
+  }
+
+  &__property-section {
+    h4 {
+      font-weight: 500;
+      margin-bottom: $spacing-xs;
+    }
+  }
+
+  &__property-value {
+    font-size: 0.875rem;
+    color: $text-secondary;
+  }
+
+  &__summary {
+    margin-top: $spacing-md;
+    font-size: 0.875rem;
+    color: $text-secondary;
+  }
+}

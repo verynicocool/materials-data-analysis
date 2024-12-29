@@ -1,12 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { experimentData } from '../../data/experiments';
-import { Experiment, PropertySelection, ScatterDataPoint } from '../../types/experiments';
+import { Experiment } from '../../types/experiments';
 import './MaterialExplorer.scss';
 
 const MaterialExplorer: React.FC = () => {
-  const [selectedX, setSelectedX] = useState<PropertySelection | ''>('');
-  const [selectedY, setSelectedY] = useState<PropertySelection | ''>('');
+  const [selectedX, setSelectedX] = useState<string>('');
+  const [selectedY, setSelectedY] = useState<string>('');
 
   const properties = useMemo(() => {
     const inputProps = new Set<string>();
@@ -27,23 +27,14 @@ const MaterialExplorer: React.FC = () => {
     if (!selectedX || !selectedY) return [];
 
     return Object.entries(experimentData).map(([experimentId, experiment]) => {
-      const [xCategory, xProp] = selectedX.split('.');
-      const [yCategory, yProp] = selectedY.split('.');
-
-      const xData = experiment[xCategory as keyof Experiment];
-      const yData = experiment[yCategory as keyof Experiment];
-      
-      // Type guard to ensure we're accessing valid properties
-      const xValue = typeof xData === 'object' && xData !== null ? 
-        (xData as Record<string, number>)[xProp] : 0;
-      const yValue = typeof yData === 'object' && yData !== null ? 
-        (yData as Record<string, number>)[yProp] : 0;
+      const xValue = experiment.inputs[selectedX as keyof Experiment['inputs']];
+      const yValue = experiment.outputs[selectedY as keyof Experiment['outputs']];
 
       return {
         experimentId,
         x: xValue,
         y: yValue,
-        label: `${xProp}: ${xValue}\n${yProp}: ${yValue}`
+        label: `${selectedX}: ${xValue}\n${selectedY}: ${yValue}`
       };
     });
   }, [selectedX, selectedY]);
@@ -55,52 +46,34 @@ const MaterialExplorer: React.FC = () => {
         
         <div className="material-explorer__controls">
           <div className="material-explorer__select-group">
-            <label htmlFor="x-select">X Axis Property</label>
+            <label htmlFor="x-select">X Axis Property (Input)</label>
             <select
               id="x-select"
               value={selectedX}
-              onChange={(e) => setSelectedX(e.target.value as PropertySelection)}
+              onChange={(e) => setSelectedX(e.target.value)}
             >
-              <option value="">Select property</option>
-              <optgroup label="Input Properties">
-                {properties.inputs.map(prop => (
-                  <option key={`input-${prop}`} value={`inputs.${prop}`}>
-                    {prop}
-                  </option>
-                ))}
-              </optgroup>
-              <optgroup label="Output Properties">
-                {properties.outputs.map(prop => (
-                  <option key={`output-${prop}`} value={`outputs.${prop}`}>
-                    {prop}
-                  </option>
-                ))}
-              </optgroup>
+              <option value="">Select input property</option>
+              {properties.inputs.map(prop => (
+                <option key={`input-${prop}`} value={prop}>
+                  {prop}
+                </option>
+              ))}
             </select>
           </div>
 
           <div className="material-explorer__select-group">
-            <label htmlFor="y-select">Y Axis Property</label>
+            <label htmlFor="y-select">Y Axis Property (Output)</label>
             <select
               id="y-select"
               value={selectedY}
-              onChange={(e) => setSelectedY(e.target.value as PropertySelection)}
+              onChange={(e) => setSelectedY(e.target.value)}
             >
-              <option value="">Select property</option>
-              <optgroup label="Input Properties">
-                {properties.inputs.map(prop => (
-                  <option key={`input-${prop}`} value={`inputs.${prop}`}>
-                    {prop}
-                  </option>
-                ))}
-              </optgroup>
-              <optgroup label="Output Properties">
-                {properties.outputs.map(prop => (
-                  <option key={`output-${prop}`} value={`outputs.${prop}`}>
-                    {prop}
-                  </option>
-                ))}
-              </optgroup>
+              <option value="">Select output property</option>
+              {properties.outputs.map(prop => (
+                <option key={`output-${prop}`} value={prop}>
+                  {prop}
+                </option>
+              ))}
             </select>
           </div>
         </div>
@@ -112,9 +85,9 @@ const MaterialExplorer: React.FC = () => {
               <XAxis
                 type="number"
                 dataKey="x"
-                name={selectedX?.split('.')[1]}
+                name={selectedX}
                 label={{ 
-                  value: selectedX?.split('.')[1] || '', 
+                  value: selectedX || '', 
                   position: 'bottom',
                   offset: 40
                 }}
@@ -122,9 +95,9 @@ const MaterialExplorer: React.FC = () => {
               <YAxis
                 type="number"
                 dataKey="y"
-                name={selectedY?.split('.')[1]}
+                name={selectedY}
                 label={{ 
-                  value: selectedY?.split('.')[1] || '', 
+                  value: selectedY || '', 
                   angle: -90,
                   position: 'left',
                   offset: 40
@@ -133,7 +106,7 @@ const MaterialExplorer: React.FC = () => {
               <Tooltip
                 content={({ payload }) => {
                   if (!payload?.[0]?.payload) return null;
-                  const data = payload[0].payload as ScatterDataPoint;
+                  const data = payload[0].payload;
                   return (
                     <div className="material-explorer__tooltip">
                       <p className="material-explorer__tooltip-title">

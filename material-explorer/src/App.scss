@@ -1,0 +1,52 @@
+@import './styles/variables';
+
+.app {
+  min-height: 100vh;
+  background-color: $background-color;
+
+  &__container {
+    max-width: 90rem;
+    margin: 0 auto;
+    padding: $spacing-md $spacing-md;
+  }
+
+  &__header {
+    margin-bottom: $spacing-xs;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $text-primary;
+  }
+
+  &__nav {
+    display: flex;
+    gap: $spacing-md;
+  }
+
+  &__nav-button {
+    padding: $spacing-xs $spacing-md;
+    border-radius: $border-radius;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+    background-color: $card-background;
+    color: $text-secondary;
+
+    &:hover {
+      background-color: darken($card-background, 5%);
+    }
+
+    &--active {
+      background-color: $primary-color;
+      color: white;
+
+      &:hover {
+        background-color: darken($primary-color, 5%);
+      }
+    }
+  }
+}
