@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { experimentData } from '../../data/experiments';
-import { ExperimentData, PropertySelection, ScatterDataPoint } from '../../types/experiments';
+import { Experiment, PropertySelection, ScatterDataPoint } from '../../types/experiments';
 import './MaterialExplorer.scss';
 
 const MaterialExplorer: React.FC = () => {
@@ -30,8 +30,14 @@ const MaterialExplorer: React.FC = () => {
       const [xCategory, xProp] = selectedX.split('.');
       const [yCategory, yProp] = selectedY.split('.');
 
-      const xValue = experiment[xCategory as keyof typeof experiment][xProp];
-      const yValue = experiment[yCategory as keyof typeof experiment][yProp];
+      const xData = experiment[xCategory as keyof Experiment];
+      const yData = experiment[yCategory as keyof Experiment];
+      
+      // Type guard to ensure we're accessing valid properties
+      const xValue = typeof xData === 'object' && xData !== null ? 
+        (xData as Record<string, number>)[xProp] : 0;
+      const yValue = typeof yData === 'object' && yData !== null ? 
+        (yData as Record<string, number>)[yProp] : 0;
 
       return {
         experimentId,
