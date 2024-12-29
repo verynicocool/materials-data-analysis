@@ -26,7 +26,7 @@ A web application for exploring and analyzing materials science experimental dat
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/material-explorer.git
+git clone [https://github.com/yourusername/material-explorer.git](https://github.com/verynicocool/materials-data-analysis)
 cd material-explorer
 ```
 
