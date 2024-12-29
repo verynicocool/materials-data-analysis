@@ -1,4 +1,4 @@
-# Materials Data Explorer
+# Materials Data Analysis
 
 A web application for exploring and analyzing materials science experimental data. Built with React, TypeScript, and Vite.
 
